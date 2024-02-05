@@ -1,0 +1,40 @@
+[
+	{
+		"id": 1,
+		"title": "Computadora Gamar PRO",
+		"description": "Computadora de alta gama",
+		"price": 20000,
+		"thumbnails": [
+			"Imagen de computadora"
+		],
+		"code": "555BB",
+		"stock": 16,
+		"status": true
+	},
+	{
+		"id": 3,
+		"title": "Monitor Gamer",
+		"description": "Monitor 1920 x 1080 175HZ",
+		"price": 5000,
+		"thumbnails": [
+			"Imagen de Monitor"
+		],
+		"code": "555AA",
+		"stock": 10,
+		"status": true
+	},
+	{
+		"id": 4,
+		"title": "Otra Pc ",
+		"description": "Esta Pc tiene aun mas RGB",
+		"price": 40000,
+		"thumbnails": [
+			"PC1.jpg",
+			"PC2.jpg"
+		],
+		"code": "999PP",
+		"stock": 16,
+		"status": true,
+		"category": "Electronic Components"
+	}
+]
