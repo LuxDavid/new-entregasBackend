@@ -21,7 +21,7 @@ router.get('/:pid', productId);
 router.post('/',
 uploader.array('thumbnails', 3),
 passport.authenticate('current', { session: false }),
-authorization('admin'),
+authorization(['admin', 'premium']),
 createProduct);
 
 //---------------------------------------------------------------------
@@ -29,14 +29,14 @@ createProduct);
 router.put("/:pid", 
 uploader.array('thumbnails', 3),
 passport.authenticate('current', { session: false }),
-authorization('admin'),
+authorization(['admin']),
 updateProduct );
 
 //---------------------------------------------------------------------
 
 router.delete("/:pid", 
 passport.authenticate('current', { session: false }),
-authorization('admin'),
+authorization(['admin', 'premium']),
 deletProduct )
 
 export default router

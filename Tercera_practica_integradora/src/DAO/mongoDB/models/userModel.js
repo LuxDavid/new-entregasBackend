@@ -9,7 +9,7 @@ const userSchema=new mongoose.Schema({
     age:{type:Number, required:true},
     password:{type: String, required:true},
     cartUser:{type:[{cart:{type:mongoose.Schema.Types.ObjectId, ref:'carts'}}]},
-    role:{type:String,  default:'user', enum:['user', 'admin']}
+    role:{type:String,  default:'user', enum:['user', 'admin','premium']}
 });
 
 userSchema.pre('findOne', function(){

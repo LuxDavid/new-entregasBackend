@@ -19,7 +19,7 @@ router.get('/:cid', getCart);
 
 router.post('/:cid/product/:pid',
 passport.authenticate('current', { session: false }),
-authorization('user'),
+authorization(['user']),
 addProductCart)
 
 //-------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ router.delete('/:cid', deletCart)
 
 router.get('/:cid/purchase',
 passport.authenticate('current', { session: false }),
-authorization('user'),
+authorization(['user']),
 purchase)
 
 export default router

@@ -67,12 +67,40 @@ export const recoverPassword= async (req,res) => {
 
     if(catchError == false) res.cookie('active', token, { maxAge: 3600000 }); 
 
-    res.render(catchError == false ? 'recoverPassword' : 'foundEmail')
+    res.render(catchError == false ? 'recoverPassword' : 'foundEmail',{style: 'index.css'})
 }
 
 export const changePassword= async (req,res) =>{
 
-    const {user, pass}= req?.params;
+    const {pass}= req?.params;
 
+    const hashPassword= createHash(pass)
+
+    const userReminder = req?.cookies?.active
+
+    const result = jwt.verify(userReminder, config.KEY, (error, credentials) => {
+        return credentials
+    })
+
+    const userNeeded = await userModel.findOne({ email: result.user });
+
+    const comparative= isValidPassword(userNeeded, pass);
+
+    userNeeded.password= hashPassword
+
+    console.log(userNeeded);
+
+
+       if(comparative == true){
+        return res.send(comparative )
+       }
+
+       if(comparative == false){
+        await userModel.updateOne({ _id: userNeeded._id}, userNeeded)
+        res.clearCookie('active');
+        return res.send(false)
+       }
 
 }
+
+

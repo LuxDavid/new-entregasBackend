@@ -12,7 +12,7 @@ router.post('/foundEmailUser/:email', sendEmail );
 
 router.get('/recoverPassword/:token', recoverPassword );
 
-router.post('/recoverPassword/:user/:pass', changePassword);
+router.post('/recoverPassword/:pass', changePassword);
 
 router.post('/current', current );
 

@@ -17,7 +17,7 @@ class ProductManagerMDB {
     //-------------------------------------------------------------
 
     async addProduct(product) {
-        const { title, description, code, price, stock, category, thumbnails } = product;
+        const { title, description, code, price, stock, category, thumbnails, owner } = product;
 
         if (!title || !description || !code || !price || !stock || !category) {
             return 'Error al crear el producto';
@@ -31,12 +31,15 @@ class ProductManagerMDB {
             status: true,
             stock,
             category,
-            thumbnails: thumbnails ?? []
+            thumbnails: thumbnails ?? [],
+            owner 
         }
 
         try {
             const result = await productModel.create(newProduct);
             // io.emit('newP', newProduct);
+
+            
 
             return newProduct
         } catch (error) {

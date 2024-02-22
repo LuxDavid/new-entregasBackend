@@ -71,14 +71,22 @@ export const createProduct = async (req, res) => {
             return res.status(400).send({ status: "Este producto ya existe, por favor verifique" });
         }
 
-        if (checkOne < 7 || checTwo) {
+        if (checkOne < 6 || checTwo) {
             req.logger.warning("The product is not complete")
             return res.status(400).send({ status: "Valores imcompletos, por favor verifique" });
         }
 
+        const creator= req.user
+
+        const finalProduct= req.body
+
+        if(creator.user.role !== 'admin'){
+            finalProduct.owner= creator.user.email
+        }
+
         const newProduct = await ProductRepository.addProduct(req.body);
 
-        res.send({ status: "Producto Crado correctamente", result: req.body });
+        res.send({ status: "Producto Crado correctamente", result: req.body});
 
     } catch (error) {
         res.status(400).send({ status: error, result: "No se pudo crear el producto" })
