@@ -76,17 +76,17 @@ export const createProduct = async (req, res) => {
             return res.status(400).send({ status: "Valores imcompletos, por favor verifique" });
         }
 
-        const creator= req.user
+        const creator = req.user
 
-        const finalProduct= req.body
+        const finalProduct = req.body
 
-        if(creator.user.role !== 'admin'){
-            finalProduct.owner= creator.user.email
+        if (creator.user.role !== 'admin') {
+            finalProduct.owner = creator.user.email
         }
 
         const newProduct = await ProductRepository.addProduct(req.body);
 
-        res.send({ status: "Producto Crado correctamente", result: req.body});
+        res.send({ status: "Producto Crado correctamente", result: req.body });
 
     } catch (error) {
         res.status(400).send({ status: error, result: "No se pudo crear el producto" })
@@ -119,14 +119,32 @@ export const updateProduct = async (req, res) => {
 export const deletProduct = async (req, res) => {
 
     try {
-        const deletProduct = await ProductRepository.deletProduct(req.params.pid);
 
-        if(deletProduct) return res.send({ status: 'Product deleted', payload: deletProduct })
+        const creator = req.user;
+        const productID = req.params.pid
 
-        if(!deletProduct){
+        const product = await ProductRepository.getProductById(productID);
+
+        if (!product) {
             req.logger.error("Error to delet product")
-            res.status(400).send({ status: "Product not found" })
+            res.status(400).send({ status: "Error to delet product" })
         }
+
+        if (creator.user.role === 'admin' || product.owner == creator.user.email) {
+
+            const deletProduct = await ProductRepository.deletProduct(productID);
+
+            if (deletProduct) return res.send({ status: 'Product deleted', payload: deletProduct })
+
+        }
+
+        if(product.owner != creator.user.email || creator.user.role != 'admin'){
+            req.logger.error("Not autorized for delet this product")
+            res.status(400).send({ status: "Not autorized for delet this product" })
+        }
+
+       
+
 
     } catch (error) {
         return error
