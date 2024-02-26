@@ -10,6 +10,9 @@ export default class Mail {
             auth: {
                 user: config.MAIL_USER,
                 pass: config.MAIL_PASS
+            },
+            tls:{
+                rejectUnauthorized:false
             }
         })
     }
