@@ -8,6 +8,7 @@ import productsViews from './routes/views-router.js';
 import messageRouter from './routes/messages-router.js';
 import sessionRouter from './routes/session-router.js';
 import loggerRouter from './routes/logger-router.js';
+import userRouter from './routes/user-router.js';
 
 import handlebars from 'express-handlebars';
 import { Server } from 'socket.io';
@@ -53,6 +54,7 @@ app.use('/api/carts', cartsRouter);
 app.use('/messages', messageRouter);
 app.use('/api/session', sessionRouter);
 app.use('/api/loggerTest', loggerRouter);
+app.use('/api/user', userRouter);
 
 const {PORT }= config
 const httpServer= app.listen(PORT, () => console.log(`Servidor activo en el puerto ${PORT}`))

@@ -22,6 +22,6 @@ async (req, res) => { })
 
 router.get('/githubcallback',passport.authenticate('github', { failureRedirect: '/error' }),githubcallback);
 
-router.get('/user', passport.authenticate('current', { session: false }), userId)
+router.get('/user', passport.authenticate('current', { session: false }), userId);
 
 export default router
