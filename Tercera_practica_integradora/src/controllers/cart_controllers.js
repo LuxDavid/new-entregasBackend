@@ -1,4 +1,4 @@
-import { CartRepository, TicketRepository } from "../services/index.js";
+import { CartRepository, TicketRepository, ProductRepository } from "../services/index.js";
 
 //-------------------------------------------------------------------
 
@@ -39,8 +39,16 @@ export const getCart = async (req, res) => {
 export const addProductCart = async (req, res) => {
 
     try {
+        const creator = req.user;
         const cid = req.params.cid;
         const pid = req.params.pid;
+
+        const productOwner = await ProductRepository.getProductById(pid);
+
+        if(productOwner.owner == creator.user.email){
+            req.logger.warning("You can't add this producto to cart, becouse you are the creator");
+           return res.status(401).send({error:"You can't add this producto to cart, becouse you are the creator"});
+        }
 
         const product = await CartRepository.addProductCart(cid, pid);
 
