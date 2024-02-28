@@ -40,12 +40,6 @@ paths:
       summary: Obiene un producto por su id
       tags:
         - Products
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
       parameters:
       - name: pid
         in: path
@@ -128,11 +122,13 @@ components:
                 thumbnails:
                     type: array
                     description: Array de imagenes de un producto
+                    items:
+                      type: string
                 owner:
                     type: string
                     description: Por defecto admin pero si es creado por un usuario premium obtiene el correo del creador
     examples:
-        ProductFindOne:
+        productExample:
             value:
                 status: success
                 message: Product found successful

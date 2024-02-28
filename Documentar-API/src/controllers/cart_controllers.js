@@ -26,7 +26,7 @@ export const getCart = async (req, res) => {
 
         if (!cartFound) return (res.status(400).send(false));
 
-        req.logger.info(JSON.stringify(cartFound));
+        // req.logger.info(JSON.stringify(cartFound));
 
         return res.send({ status: cartFound })
     } catch (error) {
