@@ -1,0 +1,6 @@
+paths:
+  /api/carts:
+    post:
+      summary: Obiene todas los productos
+      tags:
+        - Carts
