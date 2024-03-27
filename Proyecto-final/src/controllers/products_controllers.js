@@ -1,4 +1,5 @@
 import { ProductRepository } from "../services/index.js";
+import UsersDTO from "../DTO/users-dto.js";
 
 //-------------------------------------------------------------------
 

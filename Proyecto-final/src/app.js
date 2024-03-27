@@ -23,6 +23,22 @@ import config from './config/config.js';
 
 import { addLoggerDevelopment } from './utils/loggerdDevelopment.js';
 
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express';
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.3',
+        info: {
+            title: 'My ecommerce',
+            description: 'Documentacion para mi ecommerce'
+        }
+    },
+    apis: [__dirname + '/../docs/**/*.yaml']
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
+
 const app = express();
 
 app.use(express.json());
@@ -48,6 +64,8 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
 app.use('/', productsViews);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
@@ -55,9 +73,11 @@ app.use('/messages', messageRouter);
 app.use('/api/session', sessionRouter);
 app.use('/api/loggerTest', loggerRouter);
 app.use('/api/user', userRouter);
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
+
 
 const {PORT }= config
-const httpServer= app.listen(PORT, () => console.log(`Servidor activo en el puerto ${PORT}`))
+const httpServer= app.listen(PORT, () => console.log(`Servidor activo en el puerto ${PORT}`));
 
 //-----------------------------------------------------------------------------------------------------------
 
