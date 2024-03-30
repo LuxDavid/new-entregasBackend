@@ -143,9 +143,6 @@ export const deletProduct = async (req, res) => {
             res.status(400).send({ status: "Not autorized for delet this product" })
         }
 
-       
-
-
     } catch (error) {
         return error
     }

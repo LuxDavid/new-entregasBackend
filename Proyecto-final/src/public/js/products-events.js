@@ -2,14 +2,13 @@ const send = document.querySelector('#send-button');
 const nameUser=document.querySelector('#nameUser');
 const cartVisit=document.getElementById('visitCart');
 
-send.addEventListener("click", (e) => {
+send.addEventListener('click', async (e) => {
     const search = document.querySelector('#search').value;
     const newLimit = document.querySelector('#limit').value;
     const sort = document.querySelector('#price-sort').value;
 
-    document.location.href = `http://localhost:8080/?limit=${newLimit}&query=${search}&sort=${sort}`
-}
-);
+document.location.href = `http://127.0.0.1:8080/?limit=${newLimit}&query=${search}&sort=${sort}`
+});
 
 cartVisit.addEventListener('click', async ()=>{
 

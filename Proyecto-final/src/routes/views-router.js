@@ -9,7 +9,7 @@ router.get('/', justPublicWitoutSession ,passport.authenticate('current', { sess
 
 router.get('/realTimeProducts', realTimeProducts );
 
-router.get('/carts/:cid', cartUser)
+router.get('/carts/:cid', cartUser);
 
 router.get('/api/session/register', register );
 

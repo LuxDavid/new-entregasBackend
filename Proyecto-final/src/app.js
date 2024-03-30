@@ -64,8 +64,6 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 app.use('/', productsViews);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
@@ -73,8 +71,7 @@ app.use('/messages', messageRouter);
 app.use('/api/session', sessionRouter);
 app.use('/api/loggerTest', loggerRouter);
 app.use('/api/user', userRouter);
-app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
-
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 const {PORT }= config
 const httpServer= app.listen(PORT, () => console.log(`Servidor activo en el puerto ${PORT}`));

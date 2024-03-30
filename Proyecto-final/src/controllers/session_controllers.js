@@ -44,7 +44,6 @@ export const sendEmail= async (req,res) => {
 
     await mailModule.send(email, "Restablecer contraseña", html);
 
-
 }
 
 export const recoverPassword= async (req,res) => {
@@ -78,7 +77,7 @@ export const changePassword= async (req,res) =>{
 
     const result = jwt.verify(userReminder, config.KEY, (error, credentials) => {
         return credentials
-    })
+    });
 
     const userNeeded = await UserRepository.getUserByEmail(result.user);
     const comparative= isValidPassword(userNeeded, pass);

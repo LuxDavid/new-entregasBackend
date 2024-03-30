@@ -1,4 +1,5 @@
 import { UserRepository } from "../services/index.js";
+import UsersDTO from "../DTO/users-dto.js";
 
 export const changeRole = async (req, res) => {
 
@@ -19,5 +20,22 @@ export const changeRole = async (req, res) => {
         await UserRepository.updateUser({ _id: userForChangue._id }, roleNewForUser)
         res.send({ result: 'Role of user was changed for premium' })
     }
+
+}
+
+export const getUsers= async (req, res) =>{
+
+const result= []
+
+const users= await UserRepository.getUsers();
+
+for (const user of users) {
+
+    const filterInformation= new UsersDTO(user);
+
+    result.push(filterInformation);
+}
+
+res.send({usersResult:result});
 
 }

@@ -7,3 +7,4 @@ export default class UsersDTO{
         this.role= user.role
     }
 }
+
