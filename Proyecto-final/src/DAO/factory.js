@@ -5,6 +5,7 @@ import { programOPTS } from '../commander.js';
 export let Products
 export let Carts
 export let Tickets
+export let Users
 
 const { MONGO_DBNAME, MONGO_URL } = config
 
@@ -16,10 +17,13 @@ switch (programOPTS.p) {
         const { default: ProductsMongo } = await import('./mongoDB/productManagerMDB.js');
         const { default: CartsMongo } = await import('./mongoDB/cartManagerMDB.js');
         const { default: TicketsMongo } = await import('./mongoDB/ticketManagerMDB.js');
+        const { default: UsersMongo } = await import('./mongoDB/userManagerMDB.js');
+
 
         Products = ProductsMongo
         Carts = CartsMongo
         Tickets= TicketsMongo
+        Users= UsersMongo
 
         break;
 

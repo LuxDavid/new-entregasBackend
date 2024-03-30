@@ -1,5 +1,4 @@
 import { productModel } from "../mongoDB/models/productModel.js";
-// import { io } from '../../app.js';
 
 class ProductManagerMDB {
 
@@ -37,10 +36,6 @@ class ProductManagerMDB {
 
         try {
             const result = await productModel.create(newProduct);
-            // io.emit('newP', newProduct);
-
-            
-
             return newProduct
         } catch (error) {
 

@@ -1,7 +1,7 @@
 import Mail from '../modules/mail.module.js';
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
-import { userModel } from '../DAO/mongoDB/models/userModel.js';
+import { UserRepository } from '../services/index.js';
 import { generateToken, isValidPassword, createHash } from '../utils.js';
 
 const mailModule= new Mail();
@@ -12,8 +12,6 @@ export const register= async (req, res) => {
 }
 
 export const login= async (req, res) => {
-
-    console.log(req.user.email);
 
     res.cookie('cookieUS', req.user.token).redirect('/');
 }
@@ -82,21 +80,17 @@ export const changePassword= async (req,res) =>{
         return credentials
     })
 
-    const userNeeded = await userModel.findOne({ email: result.user });
-
+    const userNeeded = await UserRepository.getUserByEmail(result.user);
     const comparative= isValidPassword(userNeeded, pass);
 
     userNeeded.password= hashPassword
-
-    console.log(userNeeded);
-
 
        if(comparative == true){
         return res.send(comparative )
        }
 
        if(comparative == false){
-        await userModel.updateOne({ _id: userNeeded._id}, userNeeded)
+        await UserRepository.updateUser({ _id: userNeeded._id}, userNeeded)
         res.clearCookie('active');
         return res.send(false)
        }
