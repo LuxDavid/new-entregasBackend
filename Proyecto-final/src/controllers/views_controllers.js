@@ -131,4 +131,9 @@ export const foundEmailPage= async (req, res) => {
     res.render('foundEmail', {style: 'index.css'});
 }
 
+export const modify= async (req, res) => {
+
+    res.render('modify', {style: 'index.css'});
+}
+
 

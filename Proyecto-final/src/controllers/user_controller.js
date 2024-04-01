@@ -3,25 +3,27 @@ import UsersDTO from "../DTO/users-dto.js";
 
 export const changeRole = async (req, res) => {
 
-    const userActive = req?.user?.user
+    const user = req?.params.email
 
-    const userForChangue = await UserRepository.getUserByEmail({ email: userActive.email })
+    const role = req?.params.role
+
+    const userForChangue = await UserRepository.getUserByEmail(user);
 
     const roleNewForUser = userForChangue;
 
-    if (userForChangue.role == 'premium') {
-        roleNewForUser.role = 'user'
-        await UserRepository.updateUser({ _id: userForChangue._id }, roleNewForUser)
-        res.send({ result: 'Role of user was changed for user' })
+    if(role == roleNewForUser.role ) {
+
+      return  res.status(400).send({result: true});
     }
 
-    if(userForChangue.role == 'user'){
-        roleNewForUser.role = 'premium'
+    if(role != roleNewForUser.role){
+        roleNewForUser.role= role
         await UserRepository.updateUser({ _id: userForChangue._id }, roleNewForUser)
-        res.send({ result: 'Role of user was changed for premium' })
+        res.send({ result: 'Role of user was changed' })
     }
-
 }
+
+//------------------------------------------------------------------------------------------
 
 export const getUsers= async (req, res) =>{
 
@@ -37,5 +39,59 @@ for (const user of users) {
 }
 
 res.send({usersResult:result});
+
+}
+
+//------------------------------------------------------------------------------------------
+
+export const getUserByEmail= async (req,res)=>{
+
+    try {
+        const user = req.params.email;
+
+        const userFounded = await UserRepository.getUserByEmail(user);
+
+        if (!userFounded) {
+            req.logger.error("User not founded")
+            return res.status(400).send({ error: "User not founded" });
+        }
+
+        if (userFounded) {
+            req.logger.info("User founded")
+            return res.send({ user: userFounded });
+        }
+    }
+    catch (error) {
+
+        return error
+    }
+}
+
+//------------------------------------------------------------------------------------------
+
+export const deletUser= async (req,res)=>{
+
+    try {
+        const userEmail = req.params.email;
+
+        const userFounded = await UserRepository.getUserByEmail(userEmail);
+
+        if (userFounded) {
+            await UserRepository.deletUser(userEmail);
+            req.logger.info("User Deleted");
+            return res.status(200).send({ result: true });
+        }
+
+        
+        if (!userFounded) {
+            req.logger.error("User not founded")
+            return res.status(400).send({ result: false });
+        }
+    }
+    catch (error) {
+
+        return error
+    }
+
 
 }

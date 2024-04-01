@@ -102,3 +102,33 @@ h2{
   width: 10rem;
   background-color: wheat;
 }
+
+#infoForUser{
+  width: 70rem;
+  height: 30rem;
+  border: 1px solid white;
+  box-shadow: 1px 1px 5px white;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+#info-user{
+  text-align: center;
+}
+
+#details-user{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.dataUser{
+  color: white;
+  font-size: 30px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  padding: 1rem;
+  margin: 1rem;
+}

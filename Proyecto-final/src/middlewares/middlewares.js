@@ -15,7 +15,25 @@ export const authorization = (roles) => {
         if (roles.indexOf(user.role) !== -1 ) {
             return next()
         }
-        return res.status(403).send({ error: 'No permisions', access: roles, user:user.role })
+
+        return res.status(403).send({ error: 'No permisions', access: roles, user:user.role });
+       
+    }
+}
+
+export const authorizationViews = (roles) => {
+
+    return async (req, res, next) => {
+
+        const { user } = req.user;
+
+        if (!user) return res.status(400).send({ error: 'Error' })
+
+        if (roles.indexOf(user.role) !== -1 ) {
+            return next()
+        }
+
+        return res.redirect('/');
        
     }
 }

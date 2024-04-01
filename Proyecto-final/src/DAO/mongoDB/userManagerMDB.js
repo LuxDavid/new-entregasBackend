@@ -13,6 +13,8 @@ async getUsers(){
     }
 }
 
+  //-------------------------------------------------------------------------
+
 async getUserByEmail(emailUser){
 
     try {
@@ -26,6 +28,8 @@ async getUserByEmail(emailUser){
     }
 }
 
+  //-------------------------------------------------------------------------
+
 async updateUser(idUser, newValue){
 
     try {
@@ -34,6 +38,22 @@ async updateUser(idUser, newValue){
 
         return user
         
+    } catch (error) {
+        return false
+    }
+
+}
+
+   //-------------------------------------------------------------------------
+
+   async deletUser(emailUser) {
+
+    try {
+        const userFound = await userModel.findOne({ email: emailUser });
+        const deletedUser = await userModel.deleteOne({ email: emailUser });
+        
+        return userFound
+
     } catch (error) {
         return false
     }

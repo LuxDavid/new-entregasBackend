@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
-import {homeProducts, realTimeProducts, cartUser, register, login, profile, foundEmailPage } from "../controllers/views_controllers.js";
-import {justPublicWitoutSession} from '../middlewares/middlewares.js'
+import {homeProducts, realTimeProducts, cartUser, register, login, profile, foundEmailPage, modify } from "../controllers/views_controllers.js";
+import {justPublicWitoutSession, authorizationViews} from '../middlewares/middlewares.js'
 
 const router=Router();
 
@@ -18,5 +18,10 @@ router.get('/api/session/login', login);
 router.get('/api/session/current',passport.authenticate('current', { session: false }), profile);
 
 router.get('/api/session/foundEmailUser', foundEmailPage);
+
+router.get('/api/session/modify',
+passport.authenticate('current', { session: false }) ,
+authorizationViews(['admin']),
+modify);
 
 export default router
