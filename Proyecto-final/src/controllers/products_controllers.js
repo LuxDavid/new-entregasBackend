@@ -1,4 +1,5 @@
 import { ProductRepository } from "../services/index.js";
+import Mail from "../modules/mail.module.js";
 
 //-------------------------------------------------------------------
 
@@ -133,6 +134,12 @@ export const deletProduct = async (req, res) => {
         if (creator.user.role === 'admin' || product.owner == creator.user.email) {
 
             const deletProduct = await ProductRepository.deletProduct(productID);
+
+            if(product.owner != creator.user.email){
+                const mailModule= new Mail();
+                const html = `<h2>Un producto que has creado, fue eliminado por un Admin </h2>`
+                await mailModule.send(product.owner, "Un producto tuyo fue eliminado de la base de datos", html);
+            }
 
             if (deletProduct) return res.send({ status: 'Product deleted', payload: deletProduct })
 
