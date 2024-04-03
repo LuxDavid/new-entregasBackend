@@ -136,4 +136,13 @@ export const modify= async (req, res) => {
     res.render('modify', {style: 'index.css'});
 }
 
+export const finishSale= async (req, res) => {
+
+    res.render('finishSale', {style: 'index.css'});
+}
+
+export const ticketSale= async (req, res) => {
+
+    res.render('ticket', {style: 'index.css'});
+}
 

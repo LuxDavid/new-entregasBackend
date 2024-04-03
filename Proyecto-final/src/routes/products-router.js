@@ -10,12 +10,16 @@ const router = Router();
 
 router.get('/',
 passport.authenticate('current', { session: false }),
+authorization(['admin','user','premium']),
 getProducts
 )
 
 //-------------------------------------------------------------------
 
-router.get('/:pid', productId);
+router.get('/:pid',
+passport.authenticate('current', { session: false }),
+authorization(['admin','user','premium']),
+productId);
 
 //-------------------------------------------------------------------
 router.post('/',

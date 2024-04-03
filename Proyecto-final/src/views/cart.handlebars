@@ -7,7 +7,20 @@
       <div class="fw-bold">{{this.product.title}}</div>
       ${{this.product.price}}
     </div>
-    <span class="badge bg-primary rounded-pill">{{this.quantity}}</span>
+    <span class="badge bg-primary rounded-pill p-2">{{this.quantity}}</span>
+    <span class="badge bg-danger rounded-pill p-2 deletInCart">X</span>
   </li>
   {{/each}}
 </ol>
+
+<a href="/api/session/finishSale" id="goFinishSale">
+
+<div id="buton-containerBuy">
+  <button id="finishSale">Finalizar tu compra</button>
+</div>
+
+</a>
+
+
+
+

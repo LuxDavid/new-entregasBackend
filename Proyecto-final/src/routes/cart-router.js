@@ -9,11 +9,15 @@ const router = Router()
 
 router.post('/',
 passport.authenticate('current', { session: false }),
+authorization(['user','premium']),
 createCart );
 
 //-------------------------------------------------------------------------------------
 
-router.get('/:cid', getCart);
+router.get('/:cid',
+passport.authenticate('current', { session: false }),
+authorization(['user','premium','admin']),
+getCart);
 
 //-------------------------------------------------------------------------------------
 
@@ -24,24 +28,35 @@ addProductCart)
 
 //-------------------------------------------------------------------------------------
 
-router.delete('/:cid/product/:pid', deletProductCart)
+router.delete('/:cid/product/:pid',
+passport.authenticate('current', { session: false }),
+authorization(['user','premium']),
+deletProductCart)
 
 //-------------------------------------------------------------------------------------
 
-router.put('/:cid', overwriteCart )
+router.put('/:cid',
+passport.authenticate('current', { session: false }),
+authorization(['user','premium']),
+overwriteCart )
 
 //-------------------------------------------------------------------------------------
 
-router.put('/:cid/product/:pid', uptadeQuantityProduct)
+router.put('/:cid/product/:pid', 
+passport.authenticate('current', { session: false }),
+authorization(['user','premium']),
+uptadeQuantityProduct)
 
 //-------------------------------------------------------------------------------------
-router.delete('/:cid', deletCart)
+router.delete('/:cid', 
+authorization(['admin']),
+deletCart)
 
 //-------------------------------------------------------------------------------------
 
 router.get('/:cid/purchase',
 passport.authenticate('current', { session: false }),
-authorization(['user']),
+authorization(['user','premium']),
 purchase)
 
 export default router
