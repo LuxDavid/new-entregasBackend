@@ -8,7 +8,7 @@
       ${{this.product.price}}
     </div>
     <span class="badge bg-primary rounded-pill p-2">{{this.quantity}}</span>
-    <span class="badge bg-danger rounded-pill p-2 deletInCart">X</span>
+    <span class="badge bg-danger rounded-pill p-2 deletInCart" id="{{this.product._id}}">X</span>
   </li>
   {{/each}}
 </ol>
@@ -20,6 +20,8 @@
 </div>
 
 </a>
+
+<script src="/js/cart.js"></script>
 
 
 

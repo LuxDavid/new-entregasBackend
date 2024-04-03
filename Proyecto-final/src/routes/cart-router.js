@@ -44,7 +44,7 @@ overwriteCart )
 
 router.put('/:cid/product/:pid', 
 passport.authenticate('current', { session: false }),
-authorization(['user','premium']),
+authorization(['admin','premium']),
 uptadeQuantityProduct)
 
 //-------------------------------------------------------------------------------------

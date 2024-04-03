@@ -19,7 +19,7 @@ export const isValidPassword = (user, password) => {
 }
 
 export const generateToken= user=>{
-    return jwt.sign({user}, KEY, {expiresIn: '1h'});
+    return jwt.sign({user}, KEY, {expiresIn: '12h'});
 }
 
 

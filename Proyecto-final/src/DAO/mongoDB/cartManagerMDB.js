@@ -64,8 +64,6 @@ class CartManagerDB {
 
             const product = carrito.products.find(p => p.product._id.toString() === pid);
 
-            console.log(product);
-
             if (!product) {
                 carrito.products.push({ product: pid, quantity: 1 });
             }
@@ -95,11 +93,18 @@ class CartManagerDB {
             if (!prod) return 'Producto not found'
             if (!carrito) return 'Carrito not found'
 
-            const product = carrito.products.findIndex(p => p.product._id.toString() === pid);
+            const product = carrito.products.find(p => p.product._id.toString() === pid);
+            const productIndex = carrito.products.findIndex(p => p.product._id.toString() === pid);
 
-            if (product === -1) return 'Carrito not found'
+            if (product === -1) return 'Carrito not found';
 
-            carrito.products.splice(product, 1);
+            if(product.quantity == 1){
+                carrito.products.splice(productIndex, 1);
+            }
+
+            if (product) {
+                product.quantity--;
+            }
 
             await cartModel.updateOne({ userCart: cid }, carrito);
             return 'Se elimino el producto correctamente'
