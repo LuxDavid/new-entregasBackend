@@ -7,6 +7,11 @@ import { userModel } from '../DAO/mongoDB/models/userModel.js'
 import { createHash, isValidPassword, generateToken } from '../utils.js';
 import config from './config.js';  
 
+import { UserRepository } from '../services/index.js';
+
+import { DateTime } from "luxon";
+
+
 const {KEY, CLIENTID, CLIENTSECRET, CALLBACKURL, ADMINUSER, ADMINPASS }= config
 
 const LocalStrategy = local.Strategy;
@@ -48,6 +53,10 @@ const initializePassport = () => {
 
             const token = generateToken(user);
             user.token = token
+
+            user.last_connection= DateTime.now()
+
+            await UserRepository.updateUser(user._id, user);
 
             return done(null, user)
 
@@ -107,8 +116,9 @@ const initializePassport = () => {
     passport.use('login', new LocalStrategy(
         { usernameField: 'email' },
         async (username, password, done) => {
+
             try {
-                const user = await userModel.findOne({ email: username })
+                const user = await userModel.findOne({ email: username });
                 if (!user) {
                     return done(null, false)
                 }
@@ -119,6 +129,10 @@ const initializePassport = () => {
 
                 const token = generateToken(user);
                     user.token = token
+
+                user.last_connection= DateTime.now()
+
+                await UserRepository.updateUser(user._id, user);
 
                 return done(null, user)
             } catch (error) {
@@ -142,4 +156,4 @@ const initializePassport = () => {
     })
 }
 
-export default initializePassport
+export default initializePassport 

@@ -1,5 +1,6 @@
 import { UserRepository } from "../services/index.js";
 import UsersDTO from "../DTO/users-dto.js";
+// import Mail from "../modules/mail.module.js";
 
 export const changeRole = async (req, res) => {
 
@@ -11,13 +12,13 @@ export const changeRole = async (req, res) => {
 
     const roleNewForUser = userForChangue;
 
-    if(role == roleNewForUser.role ) {
+    if (role == roleNewForUser.role) {
 
-      return  res.status(400).send({result: true});
+        return res.status(400).send({ result: true });
     }
 
-    if(role != roleNewForUser.role){
-        roleNewForUser.role= role
+    if (role != roleNewForUser.role) {
+        roleNewForUser.role = role
         await UserRepository.updateUser({ _id: userForChangue._id }, roleNewForUser)
         res.send({ result: 'Role of user was changed' })
     }
@@ -25,26 +26,26 @@ export const changeRole = async (req, res) => {
 
 //------------------------------------------------------------------------------------------
 
-export const getUsers= async (req, res) =>{
+export const getUsers = async (req, res) => {
 
-const result= []
+    const result = []
 
-const users= await UserRepository.getUsers();
+    const users = await UserRepository.getUsers();
 
-for (const user of users) {
+    for (const user of users) {
 
-    const filterInformation= new UsersDTO(user);
+        const filterInformation = new UsersDTO(user);
 
-    result.push(filterInformation);
-}
+        result.push(filterInformation);
+    }
 
-res.send({usersResult:result});
+    res.send({ usersResult: result });
 
 }
 
 //------------------------------------------------------------------------------------------
 
-export const getUserByEmail= async (req,res)=>{
+export const getUserByEmail = async (req, res) => {
 
     try {
         const user = req.params.email;
@@ -69,7 +70,7 @@ export const getUserByEmail= async (req,res)=>{
 
 //------------------------------------------------------------------------------------------
 
-export const deletUser= async (req,res)=>{
+export const deletUser = async (req, res) => {
 
     try {
         const userEmail = req.params.email;
@@ -82,7 +83,7 @@ export const deletUser= async (req,res)=>{
             return res.status(200).send({ result: true });
         }
 
-        
+
         if (!userFounded) {
             req.logger.error("User not founded")
             return res.status(400).send({ result: false });
@@ -93,5 +94,21 @@ export const deletUser= async (req,res)=>{
         return error
     }
 
+}
+
+//------------------------------------------------------------------------------------------
+
+export const deletUsersForInactivity = async (req, res) => {
+
+    try {
+
+        const answer= await UserRepository.deletUsersForInactivity();
+        return res.status(200).send({ result: answer });
+        
+    }
+    catch (error) {
+
+        return error
+    }
 
 }

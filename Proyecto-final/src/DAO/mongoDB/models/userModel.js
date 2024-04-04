@@ -9,11 +9,12 @@ const userSchema=new mongoose.Schema({
     age:{type:Number, required:true},
     password:{type: String, required:true},
     cartUser:{type:[{cart:{type:mongoose.Schema.Types.ObjectId, ref:'carts'}}]},
-    role:{type:String,  default:'user', enum:['user', 'admin','premium']}
+    role:{type:String,  default:'user', enum:['user', 'admin','premium']},
+    last_connection:{type:String, default: new Date()}
 });
 
 userSchema.pre('findOne', function(){
     this.populate('cartUser.cart');
 })
 
-export const userModel=mongoose.model(collectionName, userSchema)
+export const userModel=mongoose.model(collectionName, userSchema);
