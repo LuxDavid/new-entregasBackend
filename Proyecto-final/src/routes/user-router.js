@@ -27,7 +27,7 @@ deletUser)
 
 //---------------------------------------------------------------------
 
-router.get('/eliminate/users', 
+router.delete('/eliminate/users', 
 passport.authenticate('current', { session: false }),
 authorization(['admin']),
 deletUsersForInactivity)

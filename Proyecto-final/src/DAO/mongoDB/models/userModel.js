@@ -10,7 +10,7 @@ const userSchema=new mongoose.Schema({
     password:{type: String, required:true},
     cartUser:{type:[{cart:{type:mongoose.Schema.Types.ObjectId, ref:'carts'}}]},
     role:{type:String,  default:'user', enum:['user', 'admin','premium']},
-    last_connection:{type:String, default: new Date()}
+    last_connection:{type:String, default:'today'}
 });
 
 userSchema.pre('findOne', function(){

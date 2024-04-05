@@ -1,6 +1,6 @@
 import { UserRepository } from "../services/index.js";
 import UsersDTO from "../DTO/users-dto.js";
-// import Mail from "../modules/mail.module.js";
+import Mail from "../modules/mail.module.js";
 
 export const changeRole = async (req, res) => {
 
@@ -103,7 +103,23 @@ export const deletUsersForInactivity = async (req, res) => {
     try {
 
         const answer= await UserRepository.deletUsersForInactivity();
-        return res.status(200).send({ result: answer });
+        const mailModule= new Mail();
+        const html = `<h2>Querido usuario, lo sentimos pero tu cuenta ha sido eliminada por exceder el tiempo limite sin conexion </h2>
+                        <h5>Si deceas volver a registrarte en un futuro, eres bienvenido cuando desees volver</h5>`
+
+
+    if(answer.length == 0){
+        return res.status(200).send({ result: 'No hay usuarios con inactividad en este momento' });
+    }
+
+    if(answer.length <= 1){
+        for (const userDeleted of answer) {
+            await mailModule.send(userDeleted.email, "Cuenta eliminada por ausencia prolongada", html);
+            await UserRepository.deletUser(userDeleted.email);
+        }
+    }
+
+    return res.status(200).send({ result: answer });
         
     }
     catch (error) {
