@@ -169,3 +169,12 @@ align-items: center;
 #goFinishSale{
   text-decoration: none;
 }
+
+#card-element {
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 900px; 
+  height: 50px;
+  background-color: #ccc;
+}

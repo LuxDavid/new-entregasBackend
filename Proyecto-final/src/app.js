@@ -9,6 +9,7 @@ import messageRouter from './routes/messages-router.js';
 import sessionRouter from './routes/session-router.js';
 import loggerRouter from './routes/logger-router.js';
 import userRouter from './routes/user-router.js';
+import paymentRouter from './routes/payment-router.js';
 
 import handlebars from 'express-handlebars';
 import { Server } from 'socket.io';
@@ -71,6 +72,7 @@ app.use('/messages', messageRouter);
 app.use('/api/session', sessionRouter);
 app.use('/api/loggerTest', loggerRouter);
 app.use('/api/user', userRouter);
+app.use('/payment-intents', paymentRouter);
 app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 const {PORT }= config

@@ -1,23 +1,21 @@
-<h1 id="cart-title">Selecciona un metodo de pago</h1>
+<form action="/payment-intents" method="POST">
+  <label for="card-element">
+    Introduce tu información de tarjeta de crédito:
+  </label>
+  <div id="card-element">
+    <!-- Elemento donde se montará el campo del número de tarjeta -->
+  </div>
+  <button type="submit">Enviar pago</button>
+</form>
 
-<div class="container-products">
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+var stripe = Stripe('pk_test_51OzABE07PUdS3FG1naRca5OXfAhPdUPUDEDg2Yw0R8dE4WIKnAQvGGUUXrjIHYCxNiXHrYvDW2RBOBHSyrLsi9N300IDKoMJiF');
+var elements = stripe.elements();
+
+var cardElement = elements.create('card');
+cardElement.mount('#card-element');
+</script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
