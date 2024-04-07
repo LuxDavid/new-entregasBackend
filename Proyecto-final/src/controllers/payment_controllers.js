@@ -25,7 +25,6 @@ const stripe = new PaymentService()
 
     res.status(200).json(result)
   } catch (error) {
-    console.error('Error al procesar el pago:', error);
     res.status(500).send('Error al procesar el pago');
   }
 
