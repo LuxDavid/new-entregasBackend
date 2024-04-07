@@ -54,7 +54,7 @@ deletCart)
 
 //-------------------------------------------------------------------------------------
 
-router.get('/:cid/purchase',
+router.post('/purchase',
 passport.authenticate('current', { session: false }),
 authorization(['user','premium']),
 purchase)

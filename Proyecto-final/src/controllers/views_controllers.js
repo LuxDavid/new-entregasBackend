@@ -1,6 +1,5 @@
 import { productModel } from "../DAO/mongoDB/models/productModel.js";
 import { cartModel } from "../DAO/mongoDB/models/cartModel.js";
-import CartManagerDB from "../DAO/mongoDB/cartManagerMDB.js";
 import UserDTO from "../DTO/user-dto.js";
 
 //---------------------------------------------------------------------
@@ -81,8 +80,6 @@ export const cartUser= async (req,res)=>{
     
         const {cid}=req.params
     
-        const cart= new CartManagerDB();
-    
         const cartSearch= await cartModel.findOne({ userCart: cid }).lean().exec();
     
         if(!cartSearch) return res.status(400).send({error:'Cart not found'})
@@ -143,6 +140,22 @@ export const finishSale= async (req, res) => {
 
 export const ticketSale= async (req, res) => {
 
-    res.render('ticket', {style: 'index.css'});
+    const {user}= req.user;
+    
+    const cartSearch= await cartModel.findOne({ userCart: user._id }).lean().exec();
+
+    let totalAmount=0;
+
+  for (const iterator of cartSearch.products) {
+    totalAmount += iterator.product.price * iterator.quantity
+  }
+
+  const dateOfSell= new Date();
+
+    res.render('ticket',
+     {style: 'index.css',
+      cart:cartSearch.products, 
+      client: user, amount: totalAmount, 
+      date:`${dateOfSell.getDay()}/${dateOfSell.getMonth()+1}/${dateOfSell.getFullYear()}` });
 }
 

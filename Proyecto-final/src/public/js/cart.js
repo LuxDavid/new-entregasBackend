@@ -38,11 +38,10 @@ const createPaymentIntent = async () => {
         .then(res => res.json())
         .then(data => {
             sessionStorage.setItem('stripeClientSecret', data.client_secret);
-            console.log('entre');
             document.location.href = "/api/session/finishSale";
         })
         .catch(err => {
-            return console.log(err);;
+            return console.log(err);
         })
 }
 

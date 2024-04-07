@@ -1,4 +1,5 @@
 import { CartRepository, TicketRepository, ProductRepository } from "../services/index.js";
+import Mail from "../modules/mail.module.js";
 
 //-------------------------------------------------------------------
 
@@ -135,11 +136,24 @@ export const purchase= async (req, res) =>{
 
 try{
 
+    const mailModule= new Mail();
+
     const {user}= req.user;
 
-    const cid = req.params.cid;
+    const cid = await CartRepository.getCartById(user._id);
 
     const result= await TicketRepository.createTicket(cid, user);
+    const html = `
+    <h2>Te entregamos tu ticket de compra a detalle </h2>
+    <ul>
+    <li>${result.code}</li>
+    <li>${result.purchase_dateTime}</li>
+    <li>$${result.amount}</li>
+    <li>${result.purchaserEmail}</li>
+    <li>${result.purchaser}</li>
+    </ul>
+    `
+    await mailModule.send(user.email, "Ticket de tu compra", html);
 
     return res.send({resultPurchase: result})
 }

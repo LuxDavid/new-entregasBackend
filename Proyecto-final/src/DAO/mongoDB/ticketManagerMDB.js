@@ -1,10 +1,8 @@
+import {userModel} from "./models/userModel.js"
+import { cartModel } from "./models/cartModel.js";
+import {ticketModel} from './models/ticketModel.js';
 import CartManagerDB from "./cartManagerMDB.js";
 import ProductManagerMDB from "./productManagerMDB.js";
-import {userModel} from "./models/userModel.js"
-import {ticketModel} from './models/ticketModel.js';
-
-const productsDB= new ProductManagerMDB();
-const cartsDB= new CartManagerDB();
 
 function generarCode() {
   const caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -23,11 +21,12 @@ class TicketManager{
 async createTicket(cid, user){
 
     try {
-        const cartSearch = await cartsDB.getCartById(cid);
-        const clientSearch = await userModel.findOne({ email: user.email });
 
-        const userEmail= clientSearch.email;
-        const userCart= clientSearch.cartUser;
+        const cartsDB= new CartManagerDB()
+        const productsDB= new ProductManagerMDB()
+
+        const cartSearch = await cartModel.findOne({ userCart: cid.userCart });
+        const clientSearch = await userModel.findOne({ email: user.email });
 
         let totalPurchase=0;
         let purchasedProducts=[];
@@ -63,11 +62,12 @@ if(totalPurchase > 0 ){
         code:miString,
         purchase_dateTime: new Date(),
         amount: totalPurchase,
-        purchaser:userEmail
+        purchaserEmail:clientSearch.email,
+        purchaser:clientSearch.name
     }
 
+    const result= await cartsDB.overwriteCart(cid.userCart, rejectedProducts);
     const FinalTicket= await ticketModel.create(ticket);
-    const result= await cartsDB.overwriteCart(cid, rejectedProducts);
 
     return FinalTicket
 }
